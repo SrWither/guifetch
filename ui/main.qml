@@ -68,7 +68,7 @@ ApplicationWindow {
 
           color: "#ffffff"
           font.pixelSize: 20
-          text: qsTr("<b>Uptime:</b> %1 hours %2 minutes and %3 seconds").arg((hours).toFixed(0)).arg((minutes%60).toFixed(0)).arg((seconds%60).toFixed(0))
+          text: qsTr("<b>Uptime:</b> %1 hours %2 minutes and %3 seconds").arg(Math.floor(hours)).arg(Math.floor(minutes%60)).arg(Math.floor(seconds%60))
         }
         Text {
           id: dataShell
