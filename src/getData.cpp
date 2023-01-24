@@ -23,6 +23,54 @@ getData::~getData() {
   qDebug() << "Bye!";
 }
 
+//Linux
+#ifdef __linux__
+
+int getData::getFreeRam() {
+  FILE *meminfo = fopen("/proc/meminfo", "r");
+  if(meminfo == NULL){
+    qDebug() << "Error al obtener informacion sobre la memoria ram";
+  }
+
+  char line[256];
+  while(fgets(line, sizeof(line), meminfo)){
+    int freeram;
+
+    if(sscanf(line, "MemAvailable: %d kB", &freeram) == 1) {
+      fclose(meminfo);
+      m_osFreeMemory = freeram / 1024;
+      return m_osFreeMemory;
+    }
+  }
+
+  fclose(meminfo);
+  return -1;
+}
+
+int getData::getTotalRam() {
+  FILE *meminfo = fopen("/proc/meminfo", "r");
+  if(meminfo == NULL){
+    qDebug() << "Error al obtener informacion sobre la memoria ram";
+  }
+
+  char line[256];
+  while(fgets(line, sizeof(line), meminfo)){
+    int totalram;
+
+    if(sscanf(line, "MemTotal: %d kB", &totalram) == 1) {
+      fclose(meminfo);
+      m_osTotalMemory = totalram / 1024;
+      return m_osTotalMemory;
+    }
+  }
+
+  fclose(meminfo);
+  return -1;
+}
+
+// FreeBSD
+#elif __FreeBSD__
+
 int getData::getFreeRam() {
   struct sysinfo info;
   sysinfo(&info);
@@ -40,6 +88,8 @@ int getData::getTotalRam() {
 
   return m_osTotalMemory / 1024;
 }
+
+#endif
 
 int getData::getUptime() {
   struct sysinfo info;
