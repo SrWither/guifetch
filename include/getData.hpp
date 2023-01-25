@@ -6,7 +6,7 @@
 class getData : public QObject {
   Q_OBJECT
   Q_PROPERTY(QString osName READ osName NOTIFY osNameChanged)
-  Q_PROPERTY(QString osDistro READ osDistro NOTIFY osDistroChanged)
+  Q_PROPERTY(QString osHost READ osHost NOTIFY osHostChanged)
   Q_PROPERTY(QString osKernel READ osKernel NOTIFY osKernelChanged)
   Q_PROPERTY(QString osArch READ osArch NOTIFY osArchChanged)
   Q_PROPERTY(int osFreeMemory READ osFreeMemory NOTIFY osFreeMemoryChanged)
@@ -21,7 +21,7 @@ class getData : public QObject {
     Q_INVOKABLE int getTotalRam();
     Q_INVOKABLE int getUptime();
     QString osName();
-    QString osDistro();
+    QString osHost();
     QString osKernel();
     QString osArch();
     int osFreeMemory();
@@ -31,7 +31,7 @@ class getData : public QObject {
 
   signals:
     void osNameChanged();
-    void osDistroChanged();
+    void osHostChanged();
     void osKernelChanged();
     void osArchChanged();
     void osFreeMemoryChanged();
@@ -41,7 +41,7 @@ class getData : public QObject {
 
   private:
     QString m_osName;
-    QString m_osDistro;
+    QString m_osHost;
     QString m_osKernel;
     QString m_osArch;
     unsigned long m_osFreeMemory;

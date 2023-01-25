@@ -48,10 +48,10 @@ ApplicationWindow {
           text: qsTr("<b>OS:</b> %1 %2").arg(getData.osName).arg(getData.osArch)
         }
         Text {
-          id: dataDistro
+          id: dataHost
           color: "#ffffff"
           font.pixelSize: 20
-          text: qsTr("<b>Distro:</b> %1").arg(getData.osDistro)
+          text: qsTr("<b>Host:</b> %1").arg(getData.osHost)
         }
         Text {
           id: dataKernel

@@ -6,6 +6,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+exec_program(uname OUTPUT_VARIABLE SYSTEM_NAME)
+set(SYSTEM_NAME "${SYSTEM_NAME}" CACHE INTERNAL "")
+
 find_package(Qt6 6.4 COMPONENTS Quick Gui REQUIRED)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
@@ -29,4 +32,11 @@ qt_add_qml_module(guifetch
     ui/main.qml
 )
 
-target_link_libraries(guifetch PRIVATE Qt6::Gui Qt6::Quick)
+
+if(SYSTEM_NAME STREQUAL "Linux")
+  target_link_libraries(guifetch PRIVATE Qt6::Gui Qt6::Quick)
+endif(SYSTEM_NAME STREQUAL "Linux")
+
+if(SYSTEM_NAME STREQUAL "FreeBSD")
+  target_link_libraries(guifetch PUBLIC sysinfo PRIVATE Qt6::Gui Qt6::Quick)
+endif(SYSTEM_NAME STREQUAL "FreeBSD")

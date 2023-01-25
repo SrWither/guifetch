@@ -11,7 +11,7 @@ getData::getData(QObject *parent) : QObject(parent) {
   uname(&name);
 
   m_osName = name.sysname;
-  m_osDistro = name.nodename;
+  m_osHost = name.nodename;
   m_osKernel = name.release;
   m_osArch = name.machine;
   getFreeRam();
@@ -104,8 +104,8 @@ QString getData::osName() {
   return m_osName;
 }
 
-QString getData::osDistro() {
-  return m_osDistro;
+QString getData::osHost() {
+  return m_osHost;
 }
 
 QString getData::osKernel() {
