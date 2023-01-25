@@ -75,21 +75,29 @@ int getData::getTotalRam() {
 #elif __FreeBSD__
 
 int getData::getFreeRam() {
-  struct sysinfo info;
-  sysinfo(&info);
+  std::string pagesize = exec("sysctl -n hw.pagesize");
+  std::string inactiveCount = exec("sysctl -n vm.stats.vm.v_inactive_count");
+  std::string freeCount = exec("sysctl -n vm.stats.vm.v_free_count");
+  std::string cacheCount = exec("sysctl -n vm.stats.vm.v_cache_count");
 
-  m_osFreeMemory = info.freeram + info.bufferram;
+  unsigned long hw_pagesize = std::stoul(pagesize);
+  unsigned long mem_inactive = std::stoul(inactiveCount) * hw_pagesize;
+  unsigned long mem_unused = std::stoul(freeCount) * hw_pagesize;
+  unsigned long mem_cache = std::stoul(cacheCount) * hw_pagesize;
 
-  return m_osFreeMemory / 1024;
+  int mem_free = (mem_inactive + mem_unused + mem_cache) / 1024 / 1024;
+
+  m_osFreeMemory = mem_free;
+
+  return m_osFreeMemory;
 }
 
 int getData::getTotalRam() {
-  struct sysinfo info;
-  sysinfo(&info);
+  std::string ram = exec("sysctl -n hw.physmem");
+  unsigned long totalram = std::stoul(ram) / 1024 / 1024;
+  m_osTotalMemory = totalram;
 
-  m_osTotalMemory = info.totalram;
-
-  return m_osTotalMemory / 1024;
+  return m_osTotalMemory;
 }
 
 #endif
