@@ -12,6 +12,10 @@ set(SYSTEM_NAME "${SYSTEM_NAME}" CACHE INTERNAL "")
 find_package(Qt6 6.4 COMPONENTS Quick Gui REQUIRED)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
+if(SYSTEM_NAME STREQUAL "FreeBSD")
+  link_directories(/usr/local/lib)
+endif(SYSTEM_NAME STREQUAL "FreeBSD")
+
 file(GLOB SRC
       src/*.cpp
       include/*.hpp
