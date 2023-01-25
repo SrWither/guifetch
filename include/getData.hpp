@@ -6,6 +6,7 @@
 class getData : public QObject {
   Q_OBJECT
   Q_PROPERTY(QString osName READ osName NOTIFY osNameChanged)
+  Q_PROPERTY(QString osDistro READ osDistro NOTIFY osDistroChanged)
   Q_PROPERTY(QString osHost READ osHost NOTIFY osHostChanged)
   Q_PROPERTY(QString osKernel READ osKernel NOTIFY osKernelChanged)
   Q_PROPERTY(QString osArch READ osArch NOTIFY osArchChanged)
@@ -13,6 +14,7 @@ class getData : public QObject {
   Q_PROPERTY(int osTotalMemory READ osTotalMemory NOTIFY osTotalMemoryChanged)
   Q_PROPERTY(QString osShell READ osShell NOTIFY osShellChanged)
   Q_PROPERTY(int osUptime READ osUptime NOTIFY osUptimeChanged)
+  /* Q_PROPERTY(QString osPackagesInstalled READ osPackagesInstalled NOTIFY osPackagesInstalledChanged) */
 
   public:
     explicit getData(QObject *parent = nullptr);
@@ -20,7 +22,10 @@ class getData : public QObject {
     Q_INVOKABLE int getFreeRam();
     Q_INVOKABLE int getTotalRam();
     Q_INVOKABLE int getUptime();
+    Q_INVOKABLE QString getDistro();
+    /* Q_INVOKABLE QString getPackageManager(); */
     QString osName();
+    QString osDistro();
     QString osHost();
     QString osKernel();
     QString osArch();
@@ -28,9 +33,11 @@ class getData : public QObject {
     int osTotalMemory();
     QString osShell();
     int osUptime();
+    /* QString osPackagesInstalled(); */
 
   signals:
     void osNameChanged();
+    void osDistroChanged();
     void osHostChanged();
     void osKernelChanged();
     void osArchChanged();
@@ -38,9 +45,11 @@ class getData : public QObject {
     void osTotalMemoryChanged();
     void osShellChanged();
     void osUptimeChanged();
+    void osPackagesInstalledChanged();
 
   private:
     QString m_osName;
+    QString m_osDistro;
     QString m_osHost;
     QString m_osKernel;
     QString m_osArch;
@@ -48,6 +57,7 @@ class getData : public QObject {
     unsigned long m_osTotalMemory;
     QString m_osShell;
     int m_osUptime;
+    /* QString m_osPackagesInstalled; */
 };
 
 #endif

@@ -4,12 +4,14 @@
 #include <QtQml/qqmlregistration.h>
 
 #include <getData.hpp>
+#include <getImage.hpp>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     getData osData;
+    getImage osImageData;
 
     QQmlApplicationEngine engine;
 
@@ -18,6 +20,7 @@ int main(int argc, char *argv[])
     rootContext->setContextProperty("WINDOW_WIDTH", 1000);
     rootContext->setContextProperty("WINDOW_HEIGHT", 500);
     rootContext->setContextProperty("getData", &osData);
+    rootContext->setContextProperty("getImage", &osImageData);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

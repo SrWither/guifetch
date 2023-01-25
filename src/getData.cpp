@@ -4,6 +4,7 @@
 #include <sys/sysinfo.h>
 #include <iostream>
 #include <cstdlib>
+#include <gf_utils.hpp>
 
 getData::getData(QObject *parent) : QObject(parent) {
   struct utsname name;
@@ -11,12 +12,14 @@ getData::getData(QObject *parent) : QObject(parent) {
   uname(&name);
 
   m_osName = name.sysname;
+  m_osDistro = getDistro();
   m_osHost = name.nodename;
   m_osKernel = name.release;
   m_osArch = name.machine;
   getFreeRam();
   getTotalRam();
   m_osShell = getenv("SHELL");
+  /* getPackageManager(); */
 }
 
 getData::~getData() {
@@ -100,8 +103,75 @@ int getData::getUptime() {
   return m_osUptime;
 }
 
+QString getData::getDistro() {
+  FILE *osrelease = fopen("/etc/os-release", "r");
+  if(osrelease == NULL){
+    qDebug() << "Error al obtener informacion sobre la distribucion";
+  }
+
+  char line[256];
+  while(fgets(line, sizeof(line), osrelease)){
+    char drname;
+
+    if(sscanf(line, "ID=%s", &drname) == 1) {
+      fclose(osrelease);
+      int pkglength = strlen(&drname);
+      QString distro = QString::fromUtf8(&drname, pkglength);
+
+      if(distro == "alpine") {
+        return "Alpine Linux";
+      }
+
+      if(distro == "arch") {
+        return "ArchLinux";
+      }
+
+      if(distro == "debian") {
+        return "Debian";
+      }
+
+      if(distro == "fedora") {
+        return "Fedora";
+      }
+
+      if(distro == "freebsd") {
+        return "FreeBSD";
+      }
+
+      if(distro == "gentoo") {
+        return "Gentoo";
+      }
+
+      if(distro == "linuxmint") {
+        return "Linux Mint";
+      }
+
+      if(distro == "manjaro") {
+        return "Manjaro Mint";
+      }
+
+      if(distro == "slackware") {
+        return "Slackware";
+      }
+
+      if(distro == "ubuntu") {
+        return "Ubuntu";
+      }
+
+      return "Unknown";
+    }
+  }
+
+  fclose(osrelease);
+  return "Distro not found";
+}
+
 QString getData::osName() {
   return m_osName;
+}
+
+QString getData::osDistro() {
+  return m_osDistro;
 }
 
 QString getData::osHost() {

@@ -25,7 +25,7 @@ ApplicationWindow {
       height: parent.height
       Image {
         id: logo
-        source: "assets/ArchLinux.png"
+        source: getImage.osImage
         width: parent.width - 20
         height: parent.height - 20
         y: 10
@@ -46,6 +46,12 @@ ApplicationWindow {
           color: "#ffffff"
           font.pixelSize: 20
           text: qsTr("<b>OS:</b> %1 %2").arg(getData.osName).arg(getData.osArch)
+        }
+        Text {
+          id: dataDistro
+          color: "#ffffff"
+          font.pixelSize: 20
+          text: qsTr("<b>Distro:</b> %1").arg(getData.osDistro)
         }
         Text {
           id: dataHost
