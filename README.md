@@ -1,3 +1,19 @@
+## Dependencies:
+```
+qt6-base qt6-declarative sysinfo(in freebsd)
+```
+
+## Build:
+
+```sh
+git clone https://github.com/SrWither/guifetch
+cd guifetch
+mkdir build && cd build
+cmake ..
+make
+./guifetch
+```
+
 <h1 align="center">Preview</h1>
 
 <h3 align="center">ArchLinux</h3>
