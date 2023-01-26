@@ -6,5 +6,6 @@
         <file>assets/debian.png</file>
         <file>assets/fedora.png</file>
         <file>assets/freebsd.png</file>
+        <file>assets/generic.png</file>
     </qresource>
 </RCC>

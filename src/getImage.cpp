@@ -4,7 +4,7 @@
 getImage::getImage(QObject *parent) : QObject(parent) {
   QString idOs = getOsId();
   m_osImage = QString("assets/%1.png").arg(idOs);
-  /* m_osImage = QString("assets/freebsd.png"); */
+  /* m_osImage = QString("assets/alpine.png"); */
 }
 
 getImage::~getImage() {

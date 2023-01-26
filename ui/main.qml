@@ -25,7 +25,13 @@ ApplicationWindow {
       height: parent.height
       Image {
         id: logo
-        source: getImage.osImage
+        source: {
+          if(getData.osDistro === "Unknown") {
+            return "assets/generic.png"
+          } else {
+            return getImage.osImage
+          }
+        }
         width: parent.width - 20
         height: parent.height - 20
         y: 10
