@@ -1,4 +1,4 @@
-# preview
+<h1 align="center">Preview</h1>
 
 <h3 align="center">ArchLinux</h3>
 <kbd>
