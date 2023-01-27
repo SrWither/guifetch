@@ -177,6 +177,10 @@ QString getData::getDistro() {
         return "Ubuntu";
       }
 
+      if(distro == "void") {
+        return "Void Linux";
+      }
+
       return "Unknown";
     }
   }
