@@ -34,6 +34,7 @@ qt_add_qml_module(guifetch
     VERSION 1.0
     QML_FILES
     ui/main.qml
+    ui/DataText.qml
 )
 
 

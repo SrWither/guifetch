@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
 
 
     QQmlContext* rootContext = engine.rootContext();
-    rootContext->setContextProperty("WINDOW_WIDTH", 1000);
-    rootContext->setContextProperty("WINDOW_HEIGHT", 500);
+    rootContext->setContextProperty("WINDOW_WIDTH", 1100);
+    rootContext->setContextProperty("WINDOW_HEIGHT", 550);
     rootContext->setContextProperty("getData", &osData);
     rootContext->setContextProperty("getImage", &osImageData);
 

@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>DataText.qml</file>
         <file>assets/arch.png</file>
         <file>assets/alpine.png</file>
         <file>assets/debian.png</file>

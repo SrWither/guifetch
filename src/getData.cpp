@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <gf_utils.hpp>
+#include <cpuInfo.hpp>
 
 getData::getData(QObject *parent) : QObject(parent) {
   struct utsname name;
@@ -19,6 +20,7 @@ getData::getData(QObject *parent) : QObject(parent) {
   getFreeRam();
   getTotalRam();
   m_osShell = getenv("SHELL");
+  getCpuInfo();
   /* getPackageManager(); */
 }
 
@@ -69,6 +71,15 @@ int getData::getTotalRam() {
 
   fclose(meminfo);
   return -1;
+}
+
+QString getData::getCpuInfo() {
+  CPUInfo cpuinfo;
+  QString model = QString(cpuinfo.model().c_str());
+  QString cores = QString("%1").arg(cpuinfo.logicalCpus());
+
+  m_osCpu = QString("%1 (%2)").arg(model).arg(cores);
+  return m_osCpu;
 }
 
 // FreeBSD
@@ -208,4 +219,8 @@ QString getData::osShell() {
 
 int getData::osUptime() {
   return m_osUptime;
+}
+
+QString getData::osCpu() {
+  return m_osCpu;
 }

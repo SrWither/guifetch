@@ -43,59 +43,49 @@ ApplicationWindow {
       color: "#303134"
       width: parent.width/2
       height: parent.height
-      Grid {
+      Column{
         id: dataGrid
-        columns: 1
+        // columns: 1
         spacing: 2
-        Text {
+        DataText {
           id: dataOs
-          color: "#ffffff"
-          font.pixelSize: 20
           text: qsTr("<b>OS:</b> %1 %2").arg(getData.osName).arg(getData.osArch)
         }
-        Text {
+        DataText {
           id: dataDistro
-          color: "#ffffff"
-          font.pixelSize: 20
           text: qsTr("<b>Distro:</b> %1").arg(getData.osDistro)
         }
-        Text {
+        DataText {
           id: dataHost
-          color: "#ffffff"
-          font.pixelSize: 20
           text: qsTr("<b>Host:</b> %1").arg(getData.osHost)
         }
-        Text {
+        DataText {
           id: dataKernel
-          color: "#ffffff"
-          font.pixelSize: 20
           text: qsTr("<b>Kernel:</b> %1").arg(getData.osKernel)
         }
-        Text {
+        DataText {
           id: dataUptime
 
           property var seconds: getData.getUptime()
           property var minutes: seconds / 60;
           property var hours: minutes / 60;
 
-          color: "#ffffff"
-          font.pixelSize: 20
           text: qsTr("<b>Uptime:</b> %1 hours %2 minutes and %3 seconds").arg(Math.floor(hours)).arg(Math.floor(minutes%60)).arg(Math.floor(seconds%60))
         }
-        Text {
+        DataText {
           id: dataShell
-          color: "#ffffff"
-          font.pixelSize: 20
           text: qsTr("<b>Shell:</b> %1").arg(getData.osShell)
         }
-        Text {
+        DataText {
+          id: dataCpu
+          text: qsTr("<b>CPU:</b> %1").arg(getData.osCpu)
+        }
+        DataText {
           id: dataMemory
 
           property var freeRam: getData.getFreeRam()
           property var totalRam: getData.getTotalRam()
 
-          color: "#ffffff"
-          font.pixelSize: 20
           text: qsTr("<b>Memory:</b> %1/%2").arg(totalRam - freeRam).arg(totalRam)
         }
         Timer {
