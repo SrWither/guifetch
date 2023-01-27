@@ -26,6 +26,10 @@ QString getOsId() {
       int pkglength = strlen(&id);
       QString osId = QString::fromUtf8(&id, pkglength);
 
+      if(osId == "\"void\"") {
+        return "void";
+      }
+
       return osId;
     }
   }
