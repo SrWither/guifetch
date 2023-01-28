@@ -1,11 +1,11 @@
-#include <getData.hpp>
 #include <QDebug>
-#include <sys/utsname.h>
-#include <sys/sysinfo.h>
-#include <iostream>
-#include <cstdlib>
-#include <gf_utils.hpp>
 #include <cpuInfo.hpp>
+#include <cstdlib>
+#include <getData.hpp>
+#include <gf_utils.hpp>
+#include <iostream>
+#include <sys/sysinfo.h>
+#include <sys/utsname.h>
 
 getData::getData(QObject *parent) : QObject(parent) {
   struct utsname name;
@@ -24,24 +24,22 @@ getData::getData(QObject *parent) : QObject(parent) {
   /* getPackageManager(); */
 }
 
-getData::~getData() {
-  qDebug() << "Bye!";
-}
+getData::~getData() { qDebug() << "Bye!"; }
 
-//Linux
+// Linux
 #ifdef __linux__
 
 int getData::getFreeRam() {
   FILE *meminfo = fopen("/proc/meminfo", "r");
-  if(meminfo == NULL){
+  if (meminfo == NULL) {
     qDebug() << "Error al obtener informacion sobre la memoria ram";
   }
 
   char line[256];
-  while(fgets(line, sizeof(line), meminfo)){
+  while (fgets(line, sizeof(line), meminfo)) {
     int freeram;
 
-    if(sscanf(line, "MemAvailable: %d kB", &freeram) == 1) {
+    if (sscanf(line, "MemAvailable: %d kB", &freeram) == 1) {
       fclose(meminfo);
       m_osFreeMemory = freeram / 1024;
       return m_osFreeMemory;
@@ -54,15 +52,15 @@ int getData::getFreeRam() {
 
 int getData::getTotalRam() {
   FILE *meminfo = fopen("/proc/meminfo", "r");
-  if(meminfo == NULL){
+  if (meminfo == NULL) {
     qDebug() << "Error al obtener informacion sobre la memoria ram";
   }
 
   char line[256];
-  while(fgets(line, sizeof(line), meminfo)){
+  while (fgets(line, sizeof(line), meminfo)) {
     int totalram;
 
-    if(sscanf(line, "MemTotal: %d kB", &totalram) == 1) {
+    if (sscanf(line, "MemTotal: %d kB", &totalram) == 1) {
       fclose(meminfo);
       m_osTotalMemory = totalram / 1024;
       return m_osTotalMemory;
@@ -71,15 +69,6 @@ int getData::getTotalRam() {
 
   fclose(meminfo);
   return -1;
-}
-
-QString getData::getCpuInfo() {
-  CPUInfo cpuinfo;
-  QString model = QString(cpuinfo.model().c_str());
-  QString cores = QString("%1").arg(cpuinfo.logicalCpus());
-
-  m_osCpu = QString("%1 (%2)").arg(model).arg(cores);
-  return m_osCpu;
 }
 
 // FreeBSD
@@ -124,60 +113,60 @@ int getData::getUptime() {
 
 QString getData::getDistro() {
   FILE *osrelease = fopen("/etc/os-release", "r");
-  if(osrelease == NULL){
+  if (osrelease == NULL) {
     qDebug() << "Error al obtener informacion sobre la distribucion";
   }
 
   char line[256];
-  while(fgets(line, sizeof(line), osrelease)){
+  while (fgets(line, sizeof(line), osrelease)) {
     char drname;
 
-    if(sscanf(line, "ID=%s", &drname) == 1) {
+    if (sscanf(line, "ID=%s", &drname) == 1) {
       fclose(osrelease);
       int pkglength = strlen(&drname);
       QString distro = QString::fromUtf8(&drname, pkglength);
 
-      if(distro == "alpine") {
+      if (distro == "alpine") {
         return "Alpine Linux";
       }
 
-      if(distro == "arch") {
+      if (distro == "arch") {
         return "ArchLinux";
       }
 
-      if(distro == "debian") {
+      if (distro == "debian") {
         return "Debian";
       }
 
-      if(distro == "fedora") {
+      if (distro == "fedora") {
         return "Fedora";
       }
 
-      if(distro == "freebsd") {
+      if (distro == "freebsd") {
         return "FreeBSD";
       }
 
-      if(distro == "gentoo") {
+      if (distro == "gentoo") {
         return "Gentoo";
       }
 
-      if(distro == "linuxmint") {
+      if (distro == "linuxmint") {
         return "Linux Mint";
       }
 
-      if(distro == "manjaro") {
+      if (distro == "manjaro") {
         return "Manjaro Mint";
       }
 
-      if(distro == "slackware") {
+      if (distro == "slackware") {
         return "Slackware";
       }
 
-      if(distro == "ubuntu") {
+      if (distro == "ubuntu") {
         return "Ubuntu";
       }
 
-      if(distro == "\"void\"") {
+      if (distro == "\"void\"") {
         return "Void Linux";
       }
 
@@ -189,42 +178,31 @@ QString getData::getDistro() {
   return "Distro not found";
 }
 
-QString getData::osName() {
-  return m_osName;
-}
+QString getData::getCpuInfo() {
+  CPUInfo cpuinfo;
+  QString model = QString(cpuinfo.model().c_str());
+  QString cores = QString("%1").arg(cpuinfo.logicalCpus());
 
-QString getData::osDistro() {
-  return m_osDistro;
-}
-
-QString getData::osHost() {
-  return m_osHost;
-}
-
-QString getData::osKernel() {
-  return m_osKernel;
-}
-
-QString getData::osArch() {
-  return m_osArch;
-}
-
-int getData::osFreeMemory() {
-  return m_osFreeMemory;
-}
-
-int getData::osTotalMemory() {
-  return m_osTotalMemory;
-}
-
-QString getData::osShell() {
-  return m_osShell;
-}
-
-int getData::osUptime() {
-  return m_osUptime;
-}
-
-QString getData::osCpu() {
+  m_osCpu = QString("%1 (%2)").arg(model).arg(cores);
   return m_osCpu;
 }
+
+QString getData::osName() { return m_osName; }
+
+QString getData::osDistro() { return m_osDistro; }
+
+QString getData::osHost() { return m_osHost; }
+
+QString getData::osKernel() { return m_osKernel; }
+
+QString getData::osArch() { return m_osArch; }
+
+int getData::osFreeMemory() { return m_osFreeMemory; }
+
+int getData::osTotalMemory() { return m_osTotalMemory; }
+
+QString getData::osShell() { return m_osShell; }
+
+int getData::osUptime() { return m_osUptime; }
+
+QString getData::osCpu() { return m_osCpu; }

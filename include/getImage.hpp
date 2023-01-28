@@ -7,17 +7,17 @@ class getImage : public QObject {
   Q_OBJECT
   Q_PROPERTY(QString osImage READ osImage NOTIFY osImageChanged)
 
-  public:
-    explicit getImage(QObject *parent = nullptr);
-    virtual ~getImage();
+public:
+  explicit getImage(QObject *parent = nullptr);
+  virtual ~getImage();
 
-    QString osImage();
+  QString osImage();
 
-  signals:
-    void osImageChanged();
+signals:
+  void osImageChanged();
 
-  private:
-    QString m_osImage;
+private:
+  QString m_osImage;
 };
 
 QString getOsId();

@@ -15,54 +15,55 @@ class getData : public QObject {
   Q_PROPERTY(QString osShell READ osShell NOTIFY osShellChanged)
   Q_PROPERTY(int osUptime READ osUptime NOTIFY osUptimeChanged)
   Q_PROPERTY(QString osCpu READ osCpu NOTIFY osCpuChanged)
-  /* Q_PROPERTY(QString osPackagesInstalled READ osPackagesInstalled NOTIFY osPackagesInstalledChanged) */
+  /* Q_PROPERTY(QString osPackagesInstalled READ osPackagesInstalled NOTIFY
+   * osPackagesInstalledChanged) */
 
-  public:
-    explicit getData(QObject *parent = nullptr);
-    virtual ~getData();
-    Q_INVOKABLE int getFreeRam();
-    Q_INVOKABLE int getTotalRam();
-    Q_INVOKABLE int getUptime();
-    Q_INVOKABLE QString getDistro();
-    Q_INVOKABLE QString getCpuInfo();
-    /* Q_INVOKABLE QString getPackageManager(); */
-    QString osName();
-    QString osDistro();
-    QString osHost();
-    QString osKernel();
-    QString osArch();
-    int osFreeMemory();
-    int osTotalMemory();
-    QString osShell();
-    int osUptime();
-    QString osCpu();
-    /* QString osPackagesInstalled(); */
+public:
+  explicit getData(QObject *parent = nullptr);
+  virtual ~getData();
+  Q_INVOKABLE int getFreeRam();
+  Q_INVOKABLE int getTotalRam();
+  Q_INVOKABLE int getUptime();
+  Q_INVOKABLE QString getDistro();
+  Q_INVOKABLE QString getCpuInfo();
+  /* Q_INVOKABLE QString getPackageManager(); */
+  QString osName();
+  QString osDistro();
+  QString osHost();
+  QString osKernel();
+  QString osArch();
+  int osFreeMemory();
+  int osTotalMemory();
+  QString osShell();
+  int osUptime();
+  QString osCpu();
+  /* QString osPackagesInstalled(); */
 
-  signals:
-    void osNameChanged();
-    void osDistroChanged();
-    void osHostChanged();
-    void osKernelChanged();
-    void osArchChanged();
-    void osFreeMemoryChanged();
-    void osTotalMemoryChanged();
-    void osShellChanged();
-    void osUptimeChanged();
-    void osCpuChanged();
-    /* void osPackagesInstalledChanged */
+signals:
+  void osNameChanged();
+  void osDistroChanged();
+  void osHostChanged();
+  void osKernelChanged();
+  void osArchChanged();
+  void osFreeMemoryChanged();
+  void osTotalMemoryChanged();
+  void osShellChanged();
+  void osUptimeChanged();
+  void osCpuChanged();
+  /* void osPackagesInstalledChanged */
 
-  private:
-    QString m_osName;
-    QString m_osDistro;
-    QString m_osHost;
-    QString m_osKernel;
-    QString m_osArch;
-    unsigned long m_osFreeMemory;
-    unsigned long m_osTotalMemory;
-    QString m_osShell;
-    int m_osUptime;
-    QString m_osCpu;
-    /* QString m_osPackagesInstalled; */
+private:
+  QString m_osName;
+  QString m_osDistro;
+  QString m_osHost;
+  QString m_osKernel;
+  QString m_osArch;
+  unsigned long m_osFreeMemory;
+  unsigned long m_osTotalMemory;
+  QString m_osShell;
+  int m_osUptime;
+  QString m_osCpu;
+  /* QString m_osPackagesInstalled; */
 };
 
 #endif
