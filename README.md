@@ -14,6 +14,12 @@ make
 ./guifetch
 ```
 
+#### Tested on:
+
+```
+ArchLinux FreeBSD and VoidLinux
+```
+
 <h1 align="center">Preview</h1>
 
 <h3 align="center">ArchLinux</h3>
