@@ -5,6 +5,7 @@
 
 class getData : public QObject {
   Q_OBJECT
+  // Qml Properties
   Q_PROPERTY(QString osName READ osName NOTIFY osNameChanged)
   Q_PROPERTY(QString osDistro READ osDistro NOTIFY osDistroChanged)
   Q_PROPERTY(QString osHost READ osHost NOTIFY osHostChanged)
@@ -21,12 +22,16 @@ class getData : public QObject {
 public:
   explicit getData(QObject *parent = nullptr);
   virtual ~getData();
+
+  // Functions for Qml
   Q_INVOKABLE int getFreeRam();
   Q_INVOKABLE int getTotalRam();
   Q_INVOKABLE int getUptime();
   Q_INVOKABLE QString getDistro();
   Q_INVOKABLE QString getCpuInfo();
   /* Q_INVOKABLE QString getPackageManager(); */
+
+  // Data for qml
   QString osName();
   QString osDistro();
   QString osHost();

@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+// system commands to string
 std::string exec(const char *cmd);
 
 #endif

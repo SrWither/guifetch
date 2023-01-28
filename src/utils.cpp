@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <string>
 
+// System commands to string
 std::string exec(const char *cmd) {
   std::array<char, 128> buffer;
   std::string result;

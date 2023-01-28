@@ -7,11 +7,12 @@
 #include <sys/sysinfo.h>
 #include <sys/utsname.h>
 
+
 getData::getData(QObject *parent) : QObject(parent) {
   struct utsname name;
 
   uname(&name);
-
+  // Distro information from sys/utsname.h
   m_osName = name.sysname;
   m_osDistro = getDistro();
   m_osHost = name.nodename;
@@ -26,21 +27,26 @@ getData::getData(QObject *parent) : QObject(parent) {
 
 getData::~getData() { qDebug() << "Bye!"; }
 
-// Linux
+// Linux code
 #ifdef __linux__
 
+//Linux free ram from /proc/meminfo
 int getData::getFreeRam() {
+  // Open /proc/meminfo
   FILE *meminfo = fopen("/proc/meminfo", "r");
   if (meminfo == NULL) {
     qDebug() << "Error al obtener informacion sobre la memoria ram";
   }
 
   char line[256];
+  // Read lines
   while (fgets(line, sizeof(line), meminfo)) {
     int freeram;
 
     if (sscanf(line, "MemAvailable: %d kB", &freeram) == 1) {
+      // Close file
       fclose(meminfo);
+      // Assign value
       m_osFreeMemory = freeram / 1024;
       return m_osFreeMemory;
     }
@@ -50,18 +56,23 @@ int getData::getFreeRam() {
   return -1;
 }
 
+//Linux total ram from /proc/meminfo
 int getData::getTotalRam() {
+  // Open file
   FILE *meminfo = fopen("/proc/meminfo", "r");
   if (meminfo == NULL) {
     qDebug() << "Error al obtener informacion sobre la memoria ram";
   }
 
   char line[256];
+  // Read lines
   while (fgets(line, sizeof(line), meminfo)) {
     int totalram;
 
     if (sscanf(line, "MemTotal: %d kB", &totalram) == 1) {
+      // Close file
       fclose(meminfo);
+      // Assign value
       m_osTotalMemory = totalram / 1024;
       return m_osTotalMemory;
     }
@@ -71,9 +82,10 @@ int getData::getTotalRam() {
   return -1;
 }
 
-// FreeBSD
+// FreeBSD code
 #elif __FreeBSD__
 
+// FreeBSD free ram from sysctl
 int getData::getFreeRam() {
   std::string pagesize = exec("sysctl -n hw.pagesize");
   std::string inactiveCount = exec("sysctl -n vm.stats.vm.v_inactive_count");
@@ -92,6 +104,7 @@ int getData::getFreeRam() {
   return m_osFreeMemory;
 }
 
+// FreeBSD total ram from sysctl command
 int getData::getTotalRam() {
   std::string ram = exec("sysctl -n hw.physmem");
   unsigned long totalram = std::stoul(ram) / 1024 / 1024;
@@ -102,6 +115,7 @@ int getData::getTotalRam() {
 
 #endif
 
+// Uptime info from sys/sysinfo.h
 int getData::getUptime() {
   struct sysinfo info;
   sysinfo(&info);
@@ -112,20 +126,25 @@ int getData::getUptime() {
 }
 
 QString getData::getDistro() {
+  // Open os-release
   FILE *osrelease = fopen("/etc/os-release", "r");
   if (osrelease == NULL) {
     qDebug() << "Error al obtener informacion sobre la distribucion";
   }
 
   char line[256];
+  // Read lines
   while (fgets(line, sizeof(line), osrelease)) {
     char drname;
 
     if (sscanf(line, "ID=%s", &drname) == 1) {
+      // Close file
       fclose(osrelease);
       int pkglength = strlen(&drname);
+      // QString from char
       QString distro = QString::fromUtf8(&drname, pkglength);
 
+      // Distro name
       if (distro == "alpine") {
         return "Alpine Linux";
       }
@@ -178,6 +197,7 @@ QString getData::getDistro() {
   return "Distro not found";
 }
 
+// Cpu model and cores from cpuInfo.hpp
 QString getData::getCpuInfo() {
   CPUInfo cpuinfo;
   QString model = QString(cpuinfo.model().c_str());
@@ -187,6 +207,7 @@ QString getData::getCpuInfo() {
   return m_osCpu;
 }
 
+// Data for qml
 QString getData::osName() { return m_osName; }
 
 QString getData::osDistro() { return m_osDistro; }
