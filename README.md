@@ -16,9 +16,7 @@ make
 
 #### Tested on:
 
-```
-ArchLinux FreeBSD and VoidLinux
-```
+`ArchLinux` `FreeBSD` **and** `VoidLinux`
 
 <h1 align="center">Preview</h1>
 
