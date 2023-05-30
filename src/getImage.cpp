@@ -34,6 +34,10 @@ QString getOsId() {
         return "void";
       }
 
+      if (osId == "\"ghostbsd\"") {
+        return "ghostbsd";
+      }
+
       return osId;
     }
   }

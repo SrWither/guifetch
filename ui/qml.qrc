@@ -7,6 +7,7 @@
         <file>assets/debian.png</file>
         <file>assets/fedora.png</file>
         <file>assets/freebsd.png</file>
+        <file>assets/ghostbsd.png</file>
         <file>assets/generic.png</file>
         <file>assets/void.png</file>
     </qresource>
