@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 exec_program(uname OUTPUT_VARIABLE SYSTEM_NAME)
 set(SYSTEM_NAME "${SYSTEM_NAME}" CACHE INTERNAL "")
 
-find_package(Qt6 6.4 COMPONENTS Quick Gui REQUIRED)
+find_package(Qt6 COMPONENTS Quick Gui REQUIRED)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 if(SYSTEM_NAME STREQUAL "FreeBSD")
