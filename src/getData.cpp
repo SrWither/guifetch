@@ -165,6 +165,10 @@ QString getData::getDistro() {
         return "FreeBSD";
       }
 
+      if (distro == "\"ghostbsd\"") {
+        return "GhostBSD";
+      }
+
       if (distro == "gentoo") {
         return "Gentoo";
       }
